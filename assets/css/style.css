@@ -1,0 +1,74 @@
+@import url(https://fonts.googleapis.com/css?family=Work+Sans:300,600);
+
+body{
+    background-image: url("../images/bg-masthead.jpg");
+    background-attachment: fixed;
+    background-size: cover;
+    font-size: 30px;
+	font-family: 'Work Sans', sans-serif;
+	color: #555;
+    font-weight: 300;
+    text-align: center;
+}
+
+.darkened-background{
+    position: fixed;
+    background: linear-gradient(to right, rgba(255, 196, 0, 0.66),black);
+    opacity: 0.25;
+    width:100%;
+    height:100%;
+    filter: blur(5px);
+}
+.title{
+    font-size: 3em;
+    filter: blur(3px);
+    color:gold;
+    margin-left:1px;
+    text-align: right;
+}
+
+#question{
+    font-size:2em;
+    min-height: 200px;
+    vertical-align: middle;
+}
+
+.quizbox{
+    /* padding-bottom:350px; */
+    min-height:640px;
+    border-radius:10px;
+}
+
+.answerbox{
+    /* display: hidden; */
+    float: right;
+}
+
+.quiz{
+    min-height:640px;
+    margin-right:1px;
+}
+#playagain,
+.answer {
+    border: 1px solid gray;
+    border-radius: 5px;
+    background: rgb(230, 230, 230);
+    height: 100px;
+    margin: 15px;
+    display:none;
+    padding-top:25px;
+    filter: blur(0.75px) contrast(0.75);
+    opacity: 0.75;
+}
+#playagain:hover,
+.answer:hover{
+    background:white;
+    transform: scale(1.03);
+    filter: blur(0px) contrast(1.25);
+    opacity: 1;
+    
+}
+
+#playagain{
+    display:none;
+}
