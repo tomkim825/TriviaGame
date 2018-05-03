@@ -4,13 +4,13 @@ body{
     background-image: url("../images/bg-masthead.jpg");
     background-attachment: fixed;
     background-size: cover;
-    font-size: 30px;
 	font-family: 'Work Sans', sans-serif;
-	color: #555;
+    color: #555;
+    font-size:5vh;
     font-weight: 300;
     text-align: center;
 }
-
+/* title and dark tint */
 .darkened-background{
     position: fixed;
     background: linear-gradient(to right, rgba(255, 196, 0, 0.66),black);
@@ -20,43 +20,38 @@ body{
     filter: blur(5px);
 }
 .title{
-    font-size: 3em;
-    filter: blur(3px);
+    font-size: 10vh;
+    filter: blur(2px);
     color:gold;
     margin-left:1px;
     text-align: right;
 }
-
-#question{
-    font-size:2em;
-    min-height: 200px;
-    vertical-align: middle;
-}
-
-.quizbox{
-    /* padding-bottom:350px; */
-    min-height:640px;
-    border-radius:10px;
-}
-
-.answerbox{
-    /* display: hidden; */
-    float: right;
-}
-
+/* quiz row that hold fixed height*/
 .quiz{
-    min-height:640px;
+    min-height:6vh;
     margin-right:1px;
 }
+/* question box that is 2/3 right column */
+.quizbox{
+    min-height:70vh;
+    border-radius:10px;
+}
+/* question is heading that displays question/correct/wrong */
+#question{
+    margin-top: 2vh;
+    font-size: 4.5vh;
+    min-height: 9vh;
+}
+/* 3 answer choices on bottom and hover styling */
 #playagain,
 .answer {
     border: 1px solid gray;
     border-radius: 5px;
     background: rgb(230, 230, 230);
-    height: 100px;
-    margin: 15px;
+    height: 12vh;
+    margin: 2vh;
     display:none;
-    padding-top:25px;
+    padding-top: 2vh;
     filter: blur(0.75px) contrast(0.75);
     opacity: 0.75;
 }
@@ -65,10 +60,8 @@ body{
     background:white;
     transform: scale(1.03);
     filter: blur(0px) contrast(1.25);
-    opacity: 1;
-    
+    opacity: 1;   
 }
-
 #playagain{
     display:none;
 }
