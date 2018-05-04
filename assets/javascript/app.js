@@ -54,6 +54,7 @@ $(document).ready(function() {
     var number;
     var number1;
     var gameover= false;
+    var timesUp= false;
 
 //      ****************************************
 //      **  initialize script with info above **
@@ -61,22 +62,25 @@ $(document).ready(function() {
 //      **    Gameplay part of script below   **
 //      ****************************************
 
+// Stop timer function to clear interval when advanced to next logic portion
     function stopTimer() {
         clearInterval(intervalId);
     };
-
+// this timer is for answering questions. If no answer, answeredCorrectly reset to false and timesUp set to true to show "Time's up at next section"
     function runTimer(number) {
         intervalId = setInterval(function countDown() {
             $('#time-left').text(number);
             number --;
-            if (number === 0) {
+            if (number < 0) {
                 answeredCorrectly = false;
+                timesUp = true;
                 stopTimer();
                 showAnswer();                
             };    
         }, 1000);
     };
-
+// this timer is for displaying 3 seconds during answer
+// **** Some overlap with above. Could combine some code to DRY it, but kept getting bugs so I gave up since it is due in a few hours***
     function answerTimer(number1) {
         intervalId = setInterval(function countDown() {
             $('#time-left').text(number1);
@@ -87,21 +91,22 @@ $(document).ready(function() {
         }, 1000);
     };
 
-    // [4th event] clear timer, set it to 3 sec, start timer, stylize answers green/red and show
+    // [4th event] clear timer, set it to 2 sec, start timer, Set a time out for 3.5 sec and move onto next question.
+    // I could have put next question function into timer but I was trying to DRY timer for reusability at first.
+    //  stylize answers green/red and show correct, wrong, or time's up based on flags
     // after this, move on to next question if there are questions left
     function showAnswer() {
             $('#time-left').text("");
             $('.answer-box').css("background-image",correctPicture).css("background-size","contain").css("background-repeat","no-repeat").css("background-position","right 10%");
             $('#score').text(score);
-            if(answeredCorrectly){ $('#question').text("CORRECT!");} else {$('#question').text("WRONG!");};
+            if(timesUp){ $('#question').text("TIME'S UP!");} 
+            else {if(answeredCorrectly){ $('#question').text("CORRECT!");} else {$('#question').text("WRONG!");};};
             for(i=1;i<(quizInfo[0].answers.length+1);i++){
             $('#answer-'+i).css("border-color","red").css("color","red").css("background-color","pink").css("opacity","0.2");
             };
             $('#'+correctAnswer).css("border-color","green").css("color","green").css("background-color","white").css("opacity","1");
-        
-            stopTimer();
-            number1 = 2;    
-            answerTimer(2);
+            stopTimer();    
+            answerTimer(3);
             setTimeout(nextQuestion, 3500);
             questionsLeft --;
             // checks if last question answered
@@ -141,8 +146,9 @@ $(document).ready(function() {
             $('#answer-3').text(quizAnswer[2]);
             // Iterates x (to go through quiz info)
             x++;
+        // once questions are on screen, 10 second timer begins
             stopTimer();
-            runTimer(7);
+            runTimer(10);
         };
 
     // [1st event] Start game with enter key press. Set gamestarted = true to prevent strange behavior if enter key pressed accidentally during quiz. answer fields will become visible
@@ -157,9 +163,6 @@ $(document).ready(function() {
             }
         });
 
-
-    // *****************************************
-
     //[last event] resets variables for next game and starts questions over again from 1st one.
         function resetGame() {
             gameover = false;
@@ -172,12 +175,13 @@ $(document).ready(function() {
             nextQuestion();
         };
 
-    // [3rd event] User clicks on an answer. Timer stops If not gameover, checks if correct answer, updates score. 
-    // Sets answeredCorrectly to true or false to later show "Correct or Wrong". Then showAnswer function
-    
+    // [3rd event] User clicks on an answer. Advances to next answer if not gameover, checks if correct answer, updates score. 
+    // Resets timesUp to false because they clicked in time. Sets answeredCorrectly to true or false to later show "Correct or Wrong". Then showAnswer function
+    // (next step is to showAnswer)
     $('.answer').on('click', function() {
         if(!gameover){
         answeredCorrectly = false;
+        timesUp = false;
         stopTimer();
         if(this.id == correctAnswer){
             score++;
